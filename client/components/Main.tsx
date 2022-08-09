@@ -44,7 +44,7 @@ const Main = () => {
     <div className={style.wrapper}>
       <div className={style.content}>
         <div className={style.formHeader}>
-          <div> Swap</div>
+          <div>Swap</div>
           <div>
             <RiSettings3Fill />
           </div>
@@ -60,7 +60,7 @@ const Main = () => {
           <div className={style.currencySelector}>
             <div className={style.currencySelectorContent}>
               <div className={style.currencySelectorIcon}>
-                <Image src={ethLogo} alt="eth logo" height={20} width={30} />
+                <Image src={ethLogo} alt="eth logo" height={20} width={20} />
               </div>
               <div className={style.currencySelectorTicker}>ETH</div>
               <AiOutlineDown className={style.currencySelectorArrow} />
@@ -78,7 +78,7 @@ const Main = () => {
           <div className={style.currencySelector}></div>
         </div>
         <div onClick={(e) => handleSubmit(e)} className={style.confirmButton}>
-          Confirm{' '}
+          Confirm
         </div>
       </div>
     </div>
