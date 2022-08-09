@@ -34,7 +34,6 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
 
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
-        console.log("we're already in the matrix");
       }
     } catch (error) {
       console.error(error);
