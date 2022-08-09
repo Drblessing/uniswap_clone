@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Image from 'next/image';
 import { RiSettings3Fill } from 'react-icons/ri';
 import { FiArrowUpRight } from 'react-icons/fi';

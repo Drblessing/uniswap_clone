@@ -1,11 +1,14 @@
 import '../styles/globals.css';
 import { TransactionProvider } from '../context/TransactionContext';
+import { AccountProvider } from '../context/AccountContext';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <TransactionProvider>
-      <Component {...pageProps} />
-    </TransactionProvider>
+    <AccountProvider>
+      <TransactionProvider>
+        <Component {...pageProps} />
+      </TransactionProvider>
+    </AccountProvider>
   );
 }
 

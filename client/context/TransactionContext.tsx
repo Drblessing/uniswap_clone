@@ -8,8 +8,6 @@ if (typeof window !== 'undefined') {
   eth = window.ethereum;
 }
 
-const FUNNY_MESSAGE = 'YOU SUCK';
-
 type Props = {
   children?: React.ReactNode;
 };
@@ -32,7 +30,6 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
       value={{
         connectWallet,
         currentAccount,
-        FUNNY_MESSAGE,
       }}
     >
       {children}
