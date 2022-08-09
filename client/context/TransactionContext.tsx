@@ -14,6 +14,7 @@ type Props = {
 
 export const TransactionProvider: React.FC<Props> = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState();
+
   const connectWallet = async (metamask = eth) => {
     try {
       if (!metamask) return alert('Please install metamask.');
@@ -24,6 +25,26 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
       throw new Error('No ethereum object.');
     }
   };
+
+  const checkIfWalletIsConnected = async (metamask = eth) => {
+    try {
+      if (!metamask) return alert('Please install metamask ');
+
+      const accounts = await metamask.request({ method: 'eth_accounts' });
+
+      if (accounts.length) {
+        setCurrentAccount(accounts[0]);
+        console.log("we're already in the matrix");
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error('No ethereum object.');
+    }
+  };
+
+  useEffect(() => {
+    checkIfWalletIsConnected();
+  }, []);
 
   return (
     <TransactionContext.Provider
