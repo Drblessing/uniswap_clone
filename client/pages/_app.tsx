@@ -1,9 +1,12 @@
 import '../styles/globals.css';
-import type { AppProps } from 'next/app';
+import { TransactionProvider } from '../context/TransactionContext';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  let x = 2;
-  return <Component {...pageProps} />;
+function MyApp({ Component, pageProps }) {
+  return (
+    <TransactionProvider>
+      <Component {...pageProps} />
+    </TransactionProvider>
+  );
 }
 
 export default MyApp;
