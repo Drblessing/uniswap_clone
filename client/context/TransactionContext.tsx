@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { contractABI, contractAddress } from '../lib/constants';
+import { ethers } from 'ethers';
+import { client } from '../lib/sanityClient';
+import { stringify } from 'querystring';
 
-export const TransactionContext: any = React.createContext<any>();
+export const TransactionContext: any = React.createContext<any>('');
 
-let eth;
+let eth: any;
 
 if (typeof window !== 'undefined') {
   eth = window.ethereum;
 }
+
+const getEthereumContract = () => {
+  const provider = new ethers.providers.Web3Provider(eth);
+  const signer = provider.getSigner();
+  const transactionContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+  return transactionContract;
+};
 
 type Props = {
   children?: React.ReactNode;
@@ -14,6 +26,11 @@ type Props = {
 
 export const TransactionProvider: React.FC<Props> = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    addressTo: '',
+    amount: '',
+  });
 
   const connectWallet = async (metamask = eth) => {
     try {
@@ -45,11 +62,108 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
     checkIfWalletIsConnected();
   }, []);
 
+  // Create user profile in Sanity
+  useEffect(() => {
+    if (!currentAccount) return;
+    const SANITY_ID: string = process.env.SANITY_ID ?? 'default';
+    const SANITY_KEY: string = process.env.SANITY_KEY ?? 'default';
+    console.log(SANITY_ID, SANITY_KEY);
+    (async () => {
+      const userDoc = {
+        _type: 'users',
+        _id: currentAccount,
+        userName: 'Unnamed',
+        address: currentAccount,
+      };
+
+      await client.createIfNotExists(userDoc);
+    })();
+  }, [currentAccount]);
+
+  const sendTransaction = async (meatamask = eth, connectedAccount = currentAccount) => {
+    try {
+      if (!meatamask) return alert('Please install metamask.');
+      const { addressTo, amount } = formData;
+      const transactionContract = getEthereumContract();
+
+      const parsedAmount = ethers.utils.parseEther(amount);
+
+      await meatamask.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: connectedAccount,
+            to: addressTo,
+            gas: '0x7EF40', //520k gwei
+            value: parsedAmount._hex,
+          },
+        ],
+      });
+
+      const transactionHash = await transactionContract.publishTransaction(
+        addressTo,
+        parsedAmount,
+        `Transferring ETH ${parsedAmount} to ${addressTo}`,
+        `Transfer`
+      );
+
+      setIsLoading(true);
+      await transactionHash.wait();
+
+      // DB
+      await saveTransaction(transactionHash.hash, amount, connectedAccount, addressTo);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChange = (e: any, name: string) => {
+    setFormData((prevState) => ({ ...prevState, [name]: e.target.value }));
+  };
+
+  const saveTransaction = async (
+    txHash: string,
+    amount: string,
+    fromAddress: string = currentAccount ?? 'typescript_fix',
+    toAddress: any
+  ) => {
+    const txDoc = {
+      _type: 'transactions',
+      _id: txHash,
+      fromAddress: fromAddress,
+      toAddress: toAddress,
+      timestamp: new Date(Date.now()).toISOString(),
+      txHash: txHash,
+      amount: parseFloat(amount),
+    };
+
+    await client.createIfNotExists(txDoc);
+
+    await client
+      .patch(fromAddress)
+      .setIfMissing({ transactions: [] })
+      .insert('after', 'transactions[-1]', [
+        {
+          _key: txHash,
+          _ref: txHash,
+          _type: 'reference',
+        },
+      ])
+      .commit();
+
+    return;
+  };
+
   return (
     <TransactionContext.Provider
       value={{
         connectWallet,
         currentAccount,
+        sendTransaction,
+        handleChange,
+        formData,
       }}
     >
       {children}

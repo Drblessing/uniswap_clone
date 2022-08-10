@@ -5,23 +5,14 @@ pragma solidity ^0.8.9;
 // import 'hardhat/console.sol';
 
 contract Uniswap {
-    event Transfer(
-        address sense,
-        address receiver,
-        uint256 amount,
-        string message,
-        uint256 timestamp,
-        string keyword,
-        string message2
-    );
+    event Transfer(address sense, address receiver, uint256 amount, string message, uint256 timestamp, string keyword);
 
     function publishTransaction(
         address payable receiver,
         uint256 amount,
         string memory message,
-        string memory keyword,
-        string memory message2
+        string memory keyword
     ) public {
-        emit Transfer(msg.sender, receiver, amount, message, block.timestamp, keyword, message2);
+        emit Transfer(msg.sender, receiver, amount, message, block.timestamp, keyword);
     }
 }

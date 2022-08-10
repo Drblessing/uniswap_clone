@@ -6,6 +6,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@sanity/client": "^3.3.3",
+    "dotenv": "^16.0.1",
+    "ethers": "^5.6.9",
+    "fs": "^0.0.1-security",
     "next": "latest",
     "react": "18.1.0",
     "react-dom": "18.1.0",

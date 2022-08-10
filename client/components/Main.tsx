@@ -6,6 +6,7 @@ import { AiOutlineDown } from 'react-icons/ai';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import ethLogo from '../assets/eth.png';
 import uniswapLogo from '../assets/uniswap.png';
+import { TransactionContext } from '../context/TransactionContext';
 
 const style = {
   wrapper: `w-screen flex items-center justify-center mt-14`,
@@ -38,8 +39,16 @@ const customStyles = {
 };
 
 const Main = () => {
-  const handleChange = (e, type) => {};
-  const handleSubmit = (e) => {};
+  const { formData, handleChange, sendTransaction } = useContext(TransactionContext);
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    console.log('Submit');
+    const { addressTo, amount } = formData;
+    e.preventDefault();
+
+    if (!addressTo || !amount) return;
+
+    sendTransaction();
+  };
   return (
     <div className={style.wrapper}>
       <div className={style.content}>
