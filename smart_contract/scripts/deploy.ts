@@ -13,5 +13,6 @@ const main = async () => {
 // and properly handle errors.
 main().catch((error) => {
   console.error(error);
+  console.log('ERROR DEPLOY')
   process.exitCode = 1;
 });
