@@ -3,6 +3,7 @@ import { contractABI, contractAddress } from '../lib/constants';
 import { ethers } from 'ethers';
 import { client } from '../lib/sanityClient';
 import { stringify } from 'querystring';
+import { useRouter } from 'next/router';
 
 export const TransactionContext: any = React.createContext<any>('');
 
@@ -31,6 +32,10 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
     addressTo: '',
     amount: '',
   });
+
+  const [loader, setLoader] = useState(1);
+
+  const router = useRouter();
 
   const connectWallet = async (metamask = eth) => {
     try {
@@ -62,12 +67,23 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
     checkIfWalletIsConnected();
   }, []);
 
+  // Trigger Loading Modal
+  useEffect(() => {
+    if (isLoading) {
+      router.push(`/?loading=${currentAccount}`);
+    } else {
+      router.push('/');
+    }
+  }, [isLoading]);
+
+  // Choose Random Loading Modal
+  useEffect(() => {
+    setLoader(1);
+  }, [isLoading]);
+
   // Create user profile in Sanity
   useEffect(() => {
     if (!currentAccount) return;
-    const SANITY_ID: string = process.env.SANITY_ID ?? 'default';
-    const SANITY_KEY: string = process.env.SANITY_KEY ?? 'default';
-    console.log(SANITY_ID, SANITY_KEY);
     (async () => {
       const userDoc = {
         _type: 'users',
@@ -164,6 +180,8 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
         sendTransaction,
         handleChange,
         formData,
+        isLoading,
+        loader,
       }}
     >
       {children}

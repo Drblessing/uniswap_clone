@@ -7,6 +7,12 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 import ethLogo from '../assets/eth.png';
 import uniswapLogo from '../assets/uniswap.png';
 import { TransactionContext } from '../context/TransactionContext';
+import ReactModal from 'react-modal';
+import { useRouter } from 'next/router';
+import Modal from 'react-modal';
+import TransactionLoader from '../components/TransactionLoader';
+
+Modal.setAppElement('#__next');
 
 const style = {
   wrapper: `w-screen flex items-center justify-center mt-14`,
@@ -29,8 +35,9 @@ const customStyles = {
     right: 'auto',
     bottom: 'auto',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: '#0a0b0d',
-    padding: 0,
+    backgroundColor: '#403d3d',
+    borderRadius: '5px',
+    padding: '100px',
     border: 'none',
   },
   overlay: {
@@ -49,6 +56,9 @@ const Main = () => {
 
     sendTransaction();
   };
+
+  const router = useRouter();
+
   return (
     <div className={style.wrapper}>
       <div className={style.content}>
@@ -90,6 +100,9 @@ const Main = () => {
           Confirm
         </div>
       </div>
+      <Modal isOpen={!!router.query.loading} style={customStyles}>
+        <TransactionLoader />
+      </Modal>
     </div>
   );
 };

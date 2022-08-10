@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Header from '../components/Header';
 import Main from '../components/Main';
 import Number from '../components/Number';
+import TransactionHistory from '../components/TransactionHistory';
+import Loading from '../components/Loading';
 
 const style = {
   wrapper: `h-screen max-h-screen h-min-screen w-screen bg-[#2D242F] text-white select-none flex flex-col justify-between`,
@@ -14,7 +16,7 @@ const Home: NextPage = () => {
     <div className={style.wrapper}>
       <Header />
       <Main />
-      <h2> Transaction Hsitory</h2>
+      <TransactionHistory />
     </div>
   );
 };
