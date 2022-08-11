@@ -8,9 +8,10 @@ import axios from 'axios';
 export const TransactionContext: any = React.createContext<any>('');
 
 let eth: any;
-let window_any: any = window;
 
 if (typeof window !== 'undefined') {
+  let window_any: any = window;
+
   eth = window_any.ethereum;
 }
 
