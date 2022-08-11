@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { client } from '../lib/sanityClient';
 import { useContext } from 'react';
 import { TransactionContext } from '../context/TransactionContext';
 import Image from 'next/image';
 import ethLogo from '../assets/ethCurrency.png';
 import { FiArrowUpRight } from 'react-icons/fi';
+import axios from 'axios';
 
 const style = {
   wrapper: `h-full text-white select-none h-full w-screen flex-1 pt-14 flex items-end justify-end pb-12 overflow-scroll px-8`,
@@ -22,15 +22,17 @@ const TransactionHistory = () => {
   useEffect(() => {
     (async () => {
       if (!isLoading && currentAccount) {
-        const query = `
-          *[_type=="users" && _id == "${currentAccount}"] {
-            "transactionList": transactions[]->{amount, toAddress, timestamp, txHash}|order(timestamp desc)[0..4]
-          }
-        `;
-
-        const clientRes = await client.fetch(query);
-
-        setTransactionHistory(clientRes[0].transactionList);
+        // Hide data on sanity
+        const transactions = await axios.post('http://localhost:3000/api/getUserTransactions', { currentAccount });
+        const data: Array<Object> = transactions.data;
+        const sorted = data
+          .sort((a, b) => {
+            return a.timestamp < b.timestamp ? 1 : a.timestamp > b.timestamp ? -1 : 0;
+          })
+          .slice(0, 5);
+        if (transactions.data) {
+          setTransactionHistory(sorted);
+        }
       }
     })();
   }, [isLoading, currentAccount]);

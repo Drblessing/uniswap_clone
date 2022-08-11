@@ -1,9 +1,15 @@
 import sanityClient from '@sanity/client';
 
-export const client = sanityClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_ID,
-  dataset: 'production',
-  apiVersion: 'v1',
-  token: process.env.NEXT_PUBLIC_SANITY_KEY,
-  useCdn: false,
-});
+export const client: any =
+  global.sanity ||
+  sanityClient({
+    projectId: process.env.SANITY_ID,
+    dataset: 'production',
+    apiVersion: 'v1',
+    token: process.env.SANITY_KEY,
+    useCdn: false,
+  });
+
+if (process.env.NODE_ENV !== 'production') {
+  global.sanity = client;
+}

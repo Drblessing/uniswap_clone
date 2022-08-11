@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { contractABI, contractAddress } from '../lib/constants';
 import { ethers } from 'ethers';
-import { client } from '../lib/sanityClient';
 import { stringify } from 'querystring';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 export const TransactionContext: any = React.createContext<any>('');
 
@@ -69,6 +69,12 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
 
   // Trigger Loading Modal
   useEffect(() => {
+    if (window.location.href !== 'http://localhost:3000') {
+      return;
+    }
+    if (window.location.href.search('http://localhost:3000/?loading=') === -1) {
+      return;
+    }
     if (isLoading) {
       router.push(`/?loading=${currentAccount}`);
     } else {
@@ -92,7 +98,7 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
         address: currentAccount,
       };
 
-      await client.createIfNotExists(userDoc);
+      await axios.post('http://localhost:3000/api/createIfNotExists', { userDoc });
     })();
   }, [currentAccount]);
 
@@ -155,19 +161,7 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
       amount: parseFloat(amount),
     };
 
-    await client.createIfNotExists(txDoc);
-
-    await client
-      .patch(fromAddress)
-      .setIfMissing({ transactions: [] })
-      .insert('after', 'transactions[-1]', [
-        {
-          _key: txHash,
-          _ref: txHash,
-          _type: 'reference',
-        },
-      ])
-      .commit();
+    const addTransaction = await axios.post('http://localhost:3000/api/addTransaction', txDoc);
 
     return;
   };

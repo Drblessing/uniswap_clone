@@ -31,7 +31,7 @@ const style = {
   title: `font-semibold text-4xl mb-12`,
 };
 
-const cssOverride = css`
+const cssOverride: any = css`
   display: block;
   margin: 0 auto;
   border-color: white;
@@ -68,7 +68,7 @@ const TransactionLoader = () => {
   useEffect(() => {
     setRandomLoader(Math.floor(Math.random() * loaders.length));
   }, []);
-  const Loader = loaders[randomLoader];
+  const Loader: any = loaders[randomLoader];
   return (
     <div className={style.wrapper}>
       <div className={style.title}>Loading...</div>
