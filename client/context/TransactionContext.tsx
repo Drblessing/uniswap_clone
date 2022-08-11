@@ -33,7 +33,7 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
     amount: '',
   });
 
-  const [loader, setLoader] = useState(1);
+  const [loader, setLoader] = useState(Math.floor(Math.random() * 10));
 
   const router = useRouter();
 
@@ -78,7 +78,7 @@ export const TransactionProvider: React.FC<Props> = ({ children }) => {
 
   // Choose Random Loading Modal
   useEffect(() => {
-    setLoader(1);
+    setLoader(Math.floor(Math.random() * 10));
   }, [isLoading]);
 
   // Create user profile in Sanity

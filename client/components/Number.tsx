@@ -6,7 +6,6 @@ export default function Number() {
     <button
       type="button"
       onClick={() => {
-        console.log('hey');
         setNumber(number + 1);
       }}
     >

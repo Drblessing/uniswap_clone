@@ -1,8 +1,30 @@
 import { css } from '@emotion/react';
-import { MoonLoader } from 'react-spinners';
-import { useState, useContext } from 'react';
-import { RingLoader } from 'react-spinners';
-import { TransactionContext } from '../context/TransactionContext';
+import { useState, useContext, useEffect } from 'react';
+import {
+  BarLoader,
+  BeatLoader,
+  BounceLoader,
+  CircleLoader,
+  ClimbingBoxLoader,
+  ClipLoader,
+  ClockLoader,
+  DotLoader,
+  FadeLoader,
+  GridLoader,
+  HashLoader,
+  PacmanLoader,
+  PropagateLoader,
+  PuffLoader,
+  PulseLoader,
+  RingLoader,
+  RiseLoader,
+  RotateLoader,
+  ScaleLoader,
+  SkewLoader,
+  SquareLoader,
+  SyncLoader,
+  MoonLoader,
+} from 'react-spinners';
 
 const style = {
   wrapper: `text-white h-72 w-72 flex flex-col justify-top items-center`,
@@ -16,9 +38,37 @@ const cssOverride = css`
 `;
 
 const TransactionLoader = () => {
-  const { loader } = useContext(TransactionContext);
-  const loaders = [MoonLoader, RingLoader];
-  const Loader = loaders[loader];
+  const loaders = [
+    BarLoader,
+    BeatLoader,
+    BounceLoader,
+    CircleLoader,
+    ClimbingBoxLoader,
+    ClipLoader,
+    ClockLoader,
+    DotLoader,
+    FadeLoader,
+    GridLoader,
+    HashLoader,
+    PacmanLoader,
+    PropagateLoader,
+    PuffLoader,
+    PulseLoader,
+    RingLoader,
+    RiseLoader,
+    RotateLoader,
+    ScaleLoader,
+    SkewLoader,
+    SquareLoader,
+    SyncLoader,
+    MoonLoader,
+  ];
+
+  const [randomLoader, setRandomLoader] = useState(Math.floor(Math.random() * loaders.length));
+  useEffect(() => {
+    setRandomLoader(Math.floor(Math.random() * loaders.length));
+  }, []);
+  const Loader = loaders[randomLoader];
   return (
     <div className={style.wrapper}>
       <div className={style.title}>Loading...</div>
@@ -28,4 +78,3 @@ const TransactionLoader = () => {
 };
 
 export default TransactionLoader;
- 

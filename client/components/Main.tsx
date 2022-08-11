@@ -48,7 +48,6 @@ const customStyles = {
 const Main = () => {
   const { formData, handleChange, sendTransaction } = useContext(TransactionContext);
   const handleSubmit = async (e: React.SyntheticEvent) => {
-    console.log('Submit');
     const { addressTo, amount } = formData;
     e.preventDefault();
 
