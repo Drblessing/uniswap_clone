@@ -4,8 +4,6 @@ import Image from 'next/image';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { AiOutlineDown } from 'react-icons/ai';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
-import ethLogo from '../assets/eth.png';
-import uniswapLogo from '../assets/uniswap.png';
 import { TransactionContext } from '../context/TransactionContext';
 import { ToastContainer, toast } from 'react-toastify';
 // Header Style
@@ -69,7 +67,7 @@ const Header = () => {
       <div className={`${style.buttonsContainer}`}>
         <div className={`${style.button} ${style.buttonPadding}`}>
           <div className={style.buttonIconContainer}>
-            <Image src={ethLogo} alt="eth logo" height={20} width={20} />
+            <Image src="/eth.png" alt="eth logo" height={20} width={20} />
           </div>
           <p> Ethereum </p>
           <div className={style.buttonIconContainer}>

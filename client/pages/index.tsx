@@ -23,7 +23,6 @@ const Home: NextPage = () => {
 
 // TODO: Implement chain checker to make sure polygon testnet
 // TODO: Update icons to polygon
-// TODO: Update logo to hackjack
 // TODO: Add blackjack buttons
 
 export default Home;

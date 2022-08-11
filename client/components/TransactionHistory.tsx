@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { TransactionContext } from '../context/TransactionContext';
 import Image from 'next/image';
-import ethLogo from '../assets/ethCurrency.png';
 import { FiArrowUpRight } from 'react-icons/fi';
 import axios from 'axios';
 
@@ -44,7 +43,7 @@ const TransactionHistory = () => {
           transactionHistory?.map((transaction, index) => (
             <div className={style.txHistoryItem} key={index}>
               <div className={style.txDetails}>
-                <Image src={ethLogo} height={20} width={15} alt="eth" />
+                <Image src="/ethCurrency.png" height={20} width={15} alt="eth" />
                 {transaction.amount} Ξ sent to{' '}
                 <span className={style.toAddress}>{transaction.toAddress.substring(0, 6)}...</span>
               </div>{' '}

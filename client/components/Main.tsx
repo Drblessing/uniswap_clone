@@ -4,8 +4,6 @@ import { RiSettings3Fill } from 'react-icons/ri';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { AiOutlineDown } from 'react-icons/ai';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
-import ethLogo from '../assets/eth.png';
-import uniswapLogo from '../assets/uniswap.png';
 import { TransactionContext } from '../context/TransactionContext';
 import ReactModal from 'react-modal';
 import { useRouter } from 'next/router';
