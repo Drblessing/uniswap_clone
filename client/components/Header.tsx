@@ -7,7 +7,7 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 import ethLogo from '../assets/eth.png';
 import uniswapLogo from '../assets/uniswap.png';
 import { TransactionContext } from '../context/TransactionContext';
-
+import { ToastContainer, toast } from 'react-toastify';
 // Header Style
 const style = {
   wrapper: `p-4 w-screen flex justify-between items-center`,
@@ -25,12 +25,13 @@ const style = {
 };
 
 const Header = () => {
+  const notify = () => toast('Wow so easy!');
   const [selectedNav, setSelectedNav] = useState('swap');
   const { connectWallet, currentAccount } = useContext(TransactionContext);
   return (
     <div className={style.wrapper}>
       <div className={style.headerLogo}>
-        <Image src={uniswapLogo} alt="uniswap" height={40} width={40} />
+        <Image src="/hackjack.png" alt="uniswap" height={60} width={60} />
       </div>
       <div className={style.nav}>
         <div className={style.navItemsContainer}>
@@ -38,21 +39,27 @@ const Header = () => {
             onClick={() => setSelectedNav('swap')}
             className={`${style.navItem} ${selectedNav === `swap` && style.activeNavItem}`}
           >
-            Swap
+            Blackjack
           </div>
           <div
-            onClick={() => setSelectedNav('pool')}
+            onClick={() => {
+              setSelectedNav('swap');
+              toast('Roulette coming soon!');
+            }}
             className={`${style.navItem} ${selectedNav === `pool` && style.activeNavItem}`}
           >
-            Pool
+            Roulette
           </div>
           <div
-            onClick={() => setSelectedNav('vote')}
+            onClick={() => {
+              setSelectedNav('swap');
+              toast('Slots coming soon!');
+            }}
             className={`${style.navItem} ${selectedNav === `vote` && style.activeNavItem}`}
           >
-            Vote
+            Slots
           </div>
-          <a href="https://info.uniswap.org/#/" target="_blank" rel="noreferrer">
+          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noreferrer">
             <div className={style.navItem}>
               Charts <FiArrowUpRight />
             </div>

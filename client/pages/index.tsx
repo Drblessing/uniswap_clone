@@ -9,7 +9,7 @@ import Loading from '../components/Loading';
 import axios from 'axios';
 
 const style = {
-  wrapper: `h-screen max-h-screen h-min-screen w-screen bg-[#2D242F] text-white select-none flex flex-col justify-between`,
+  wrapper: `h-screen max-h-screen h-min-screen w-screen bg-gradient-to-b from-black to-white text-white select-none flex flex-col justify-between`,
 };
 
 const Home: NextPage = () => {

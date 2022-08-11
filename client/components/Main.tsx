@@ -25,7 +25,7 @@ const style = {
   currencySelectorIcon: `flex items-center`,
   currencySelectorTicker: `mx-2`,
   currencySelectorArrow: `text-lg`,
-  confirmButton: `bg-[#2172E5] my-2 rounded-2xl py-6 px-8 text-xl font-semibold flex items-center justify-center cursor-pointer border border-[#2172E5] hover:border-[#234169]`,
+  confirmButton: `gap-x-4 flex flex-row items-center justify-center cursor-pointer`,
 };
 
 const customStyles = {
@@ -62,41 +62,24 @@ const Main = () => {
     <div className={style.wrapper}>
       <div className={style.content}>
         <div className={style.formHeader}>
-          <div>Swap</div>
-          <div>
-            <RiSettings3Fill />
-          </div>
+          <div>Blackjack</div>
         </div>
         <div className={style.transferPropContainer}>
-          <input
-            type="text"
-            className={style.transferPropInput}
-            placeholder="0.0"
-            pattern="^[0-9]*[.,]?[0-9]*$"
-            onChange={(e) => handleChange(e, 'amount')}
-          />
-          <div className={style.currencySelector}>
-            <div className={style.currencySelectorContent}>
-              <div className={style.currencySelectorIcon}>
-                <Image src={ethLogo} alt="eth logo" height={20} width={20} />
-              </div>
-              <div className={style.currencySelectorTicker}>ETH</div>
-              <AiOutlineDown className={style.currencySelectorArrow} />
-            </div>
-          </div>
-        </div>
-        <div className={style.transferPropContainer}>
-          <input
-            type="text"
-            className={style.transferPropInput}
-            placeholder="0x..."
-            pattern="^[0-9]*[.,]?[0-9]*$"
-            onChange={(e) => handleChange(e, 'addressTo')}
-          />
+          Dealer Cards...
           <div className={style.currencySelector}></div>
         </div>
+        <div className={style.transferPropContainer}>
+          Your cards...
+          <div className={style.currencySelector}></div>
+        </div>
+
         <div onClick={(e) => handleSubmit(e)} className={style.confirmButton}>
-          Confirm
+          <div className="grow bg-[#b91c1c] my-2 rounded-2xl py-6 px-8 text-xl font-semibold border-[#ef4444] hover:border-[#fef2f2]">
+            Hit
+          </div>
+          <div className="grow bg-[#ef4444] my-2 rounded-2xl py-6 px-8 text-xl font-semibold border-[#ef4444] hover:border-[#fef2f2]">
+            Stand
+          </div>
         </div>
       </div>
       <Modal isOpen={!!router.query.loading} style={customStyles}>
