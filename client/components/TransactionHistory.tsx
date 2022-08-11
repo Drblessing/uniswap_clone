@@ -26,7 +26,7 @@ const TransactionHistory = () => {
         const transactions = await axios.post('http://localhost:3000/api/getUserTransactions', { currentAccount });
         const data: Array<Object> = transactions.data;
         const sorted = data
-          .sort((a, b) => {
+          .sort((a: any, b: any) => {
             return a.timestamp < b.timestamp ? 1 : a.timestamp > b.timestamp ? -1 : 0;
           })
           .slice(0, 5);
