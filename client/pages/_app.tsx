@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import { TransactionProvider } from '../context/TransactionContext';
 import { AccountProvider } from '../context/AccountContext';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: any) {
   return (
     <AccountProvider>
       <TransactionProvider>
