@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import Main from '../components/Main';
 import Number from '../components/Number';
 import TransactionHistory from '../components/TransactionHistory';
-import Loading from '../components/Loading';
 import axios from 'axios';
 
 const style = {
